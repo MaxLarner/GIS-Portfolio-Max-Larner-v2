@@ -1,0 +1,301 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+---
+<BaseLayout
+  title="Dissertation — Spatial Prioritisation for Red Squirrel Conservation"
+  description="Spatial prioritisation framework for red squirrel conservation under pine marten recolonisation in Cumbria."
+>
+  <Navbar slot="nav" />
+
+  <article>
+    <!-- Project banner -->
+    <header class="project-banner">
+      <div class="banner-bg" style="background-image: url('/images/dissertation/algorithm_strongholds.png')"></div>
+      <div class="banner-overlay"></div>
+      <div class="container banner-content">
+        <a href="/projects" class="back-link">← All Projects</a>
+        <div class="banner-meta">
+          <span class="grade-badge">78 / 100</span>
+          <span class="tag">Dissertation</span>
+          <span class="tag">2025</span>
+        </div>
+        <h1>Please Marten the Gap</h1>
+        <p class="banner-sub">Spatial Prioritisation for Red Squirrel Conservation</p>
+        <div class="banner-tags">
+          {["Python", "GeoPandas", "ArcGIS Pro", "MCDA", "Landscape Ecology"].map(t => (
+            <span class="tag">{t}</span>
+          ))}
+        </div>
+      </div>
+    </header>
+
+    <div class="container project-body">
+      <div class="project-layout">
+        <!-- Main content -->
+        <div class="prose">
+
+          <h2>Project Overview</h2>
+          <p>
+            Invasive grey squirrels have displaced native red squirrels from much of the United Kingdom,
+            and culling programmes are increasingly controversial and underfunded. This dissertation develops
+            a <strong>spatial prioritisation framework</strong> to guide red squirrel conservation as the
+            <strong>native pine marten</strong> — a predator that selectively suppresses the invasive grey
+            squirrel — recolonises Cumbria after being nearly functionally extinct since the 1700s.
+          </p>
+          <p>
+            Working with open-source data and libraries, I built a Python-based algorithm that models how
+            pine martens reduce grey squirrel densities and then ranks candidate strongholds using a
+            <strong>multi-criteria decision analysis (MCDA)</strong>. Criteria include residual grey squirrel
+            density, core habitat area, and management feasibility derived from landowner willingness proxies.
+            By exploring trade-offs across three suppression scenarios (low, moderate, high), the study
+            provides an evidence-based roadmap for NGOs allocating limited resources.
+          </p>
+
+          <h2>Motivation</h2>
+          <p>
+            This project was motivated by four core questions:
+          </p>
+          <ol>
+            <li>How will grey squirrel distribution respond to pine marten recovery under different predation efficiencies?</li>
+            <li>Where should conservation NGOs prioritise strongholds when balancing grey cost, core habitat area, and management feasibility?</li>
+            <li>How robust are existing policies such as the Lake District Stronghold Complex when predator dynamics change?</li>
+            <li>How can a transparent modelling framework build trust with stakeholders and adapt to new ecological data?</li>
+          </ol>
+
+          <h2>Methodology</h2>
+          <p>
+            The analysis integrates landscape ecology, geospatial programming, and computational decision-making:
+          </p>
+          <ul>
+            <li><strong>Suppression modelling:</strong> Baseline grey squirrel densities were reduced using three pine marten suppression coefficients derived from field studies. The residual density surface becomes the grey cost criterion in the MCDA.</li>
+            <li><strong>Habitat and feasibility mapping:</strong> High-resolution land cover and woodland data were reclassified to identify suitable habitat patches. Each 100 m grid cell receives a feasibility score from 1 (Low) to 4 (High) based on grant uptake, Countryside Stewardship schemes, and Forestry England ownership.</li>
+            <li><strong>Cluster-based MCDA:</strong> A custom greedy algorithm grows clusters of habitat patches from seed sites, scoring each cluster across grey cost, core area, and feasibility. Thousands of candidate strongholds are evaluated per suppression scenario.</li>
+            <li><strong>Correlation analysis:</strong> Examined how the influence of each criterion shifts with suppression level — revealing adaptive management insights.</li>
+          </ul>
+
+          <figure>
+            <img src="/images/dissertation/code.png" alt="Workflow diagram — suppression modelling, clustering, and MCDA scoring" loading="lazy" />
+            <figcaption>Figure 1: Workflow diagram showing suppression modelling, clustering, and MCDA scoring.</figcaption>
+          </figure>
+
+          <h2>Results</h2>
+          <ul>
+            <li><strong>Whinlatter Forest</strong> is consistently identified as the top stronghold across all scenarios.</li>
+            <li>An expanded <strong>Greystoke</strong> site ranks second under low suppression; <strong>Elterwater</strong> emerges as robust across scenarios.</li>
+            <li>Significant suppression shifts priority away from conifer plantations toward broadleaf and mixed woodlands, challenging current policy.</li>
+            <li>Correlation analysis shows grey cost drives scores when grey squirrels are abundant; core habitat area rises in importance as suppression increases.</li>
+          </ul>
+
+          <figure>
+            <img src="/images/dissertation/algorithm_strongholds.png" alt="Algorithmically selected strongholds map" loading="lazy" />
+            <figcaption>Figure 2: Algorithmically selected strongholds across suppression scenarios.</figcaption>
+          </figure>
+
+          <figure>
+            <img src="/images/dissertation/Xray.png" alt="Grey squirrel density comparison under suppression scenarios" loading="lazy" />
+            <figcaption>Figure 3: Grey squirrel density in existing strongholds under low, moderate, and high pine marten suppression.</figcaption>
+          </figure>
+
+          <figure>
+            <img src="/images/dissertation/graph.png" alt="Stronghold analysis — habitat composition, core area, and grey squirrel density" loading="lazy" />
+            <figcaption>Figure 4: Stronghold analysis investigating how prioritised habitat composition, core area, and grey squirrel density change under suppression scenarios.</figcaption>
+          </figure>
+
+          <h2>Implications for NGOs</h2>
+          <p>
+            The framework provides ranked woodland complexes accounting for ecological impact and local feasibility,
+            helping NGOs target limited resources effectively. All code is open-source and replicable, fostering
+            collaboration and trust among stakeholders. The scenario outputs enable phased investment planning
+            aligned with predator recovery timelines.
+          </p>
+
+          <h2>Final Reflection</h2>
+          <p>
+            The study demonstrates that embracing a returning predator can transform invasive species management.
+            By linking pine marten recovery with a transparent prioritisation tool, it moves beyond theoretical
+            discourse to provide actionable guidance for NGOs — revealing hidden trade-offs between ecology and
+            feasibility, challenging assumptions about conifer-dominated reserves, and proposing adaptive pathways
+            that align with human and ecological realities.
+          </p>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="project-sidebar">
+          <div class="sidebar-card">
+            <h3>Resources</h3>
+            <div class="sidebar-links">
+              <a href="/projects/dissertation/FINAL_SUBMISSION.pdf" target="_blank" class="sidebar-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                </svg>
+                Full Dissertation (PDF)
+              </a>
+              <a href="https://github.com/MaxLarner/spatial_prioritisation" target="_blank" rel="noopener" class="sidebar-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
+                </svg>
+                Source Code on GitHub
+              </a>
+            </div>
+          </div>
+
+          <div class="sidebar-card">
+            <h3>Skills Demonstrated</h3>
+            <ul class="sidebar-skills">
+              <li>Geospatial programming (2,000+ line Python workflow)</li>
+              <li>Landscape ecology metrics</li>
+              <li>Multi-criteria decision analysis</li>
+              <li>Feasibility assessment & stakeholder proxies</li>
+              <li>Raster and vector processing</li>
+              <li>Scientific communication</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </article>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  /* Banner */
+  .project-banner {
+    position: relative;
+    min-height: 420px;
+    display: flex;
+    align-items: flex-end;
+    padding-top: var(--nav-h);
+    overflow: hidden;
+  }
+
+  .banner-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    filter: saturate(0.4) brightness(0.35);
+  }
+
+  .banner-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(8,13,24,1) 0%, rgba(8,13,24,0.5) 60%, rgba(8,13,24,0.2) 100%);
+  }
+
+  .banner-content {
+    position: relative;
+    z-index: 1;
+    padding-bottom: 3rem;
+    padding-top: 2rem;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.875rem;
+    color: var(--text-3);
+    margin-bottom: 1.25rem;
+    transition: color 0.15s ease;
+  }
+
+  .back-link:hover { color: var(--accent); }
+
+  .banner-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .banner-content h1 {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    margin-bottom: 0.4rem;
+  }
+
+  .banner-sub {
+    font-size: 1.1rem;
+    color: var(--text-2);
+    margin-bottom: 1rem;
+  }
+
+  .banner-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+  /* Layout */
+  .project-body { padding-top: 3.5rem; padding-bottom: 2rem; }
+
+  .project-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  /* Sidebar */
+  .project-sidebar { position: sticky; top: calc(var(--nav-h) + 2rem); }
+
+  .sidebar-card {
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .sidebar-card h3 {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-3);
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .sidebar-links { display: flex; flex-direction: column; gap: 0.6rem; }
+
+  .sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.9rem;
+    color: var(--text-2);
+    transition: color 0.15s ease;
+  }
+
+  .sidebar-link:hover { color: var(--accent); }
+
+  .sidebar-skills {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0;
+  }
+
+  .sidebar-skills li {
+    font-size: 0.875rem;
+    color: var(--text-2);
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .sidebar-skills li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 0.75rem;
+  }
+
+  @media (max-width: 900px) {
+    .project-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+    .project-sidebar { position: static; }
+  }
+</style>

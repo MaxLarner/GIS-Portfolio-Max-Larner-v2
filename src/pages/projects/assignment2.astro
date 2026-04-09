@@ -1,0 +1,248 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+---
+<BaseLayout
+  title="Weighted Spatial Redistribution Algorithm"
+  description="Implementation of Jonny Huck's weighted redistribution algorithm to resolve spatial ambiguity in geocoded Twitter data across Greater Manchester."
+>
+  <Navbar slot="nav" />
+
+  <article>
+    <header class="project-banner">
+      <div class="banner-bg" style="background-image: url('/images/assignment2/redistribution_grid.png')"></div>
+      <div class="banner-overlay"></div>
+      <div class="container banner-content">
+        <a href="/projects" class="back-link">← All Projects</a>
+        <div class="banner-meta">
+          <span class="grade-badge">82 / 100</span>
+          <span class="tag">GIS Programming</span>
+          <span class="tag">2025</span>
+        </div>
+        <h1>Weighted Spatial Redistribution</h1>
+        <p class="banner-sub">Resolving Spatial Ambiguity with Population-Weighted GIS</p>
+        <div class="banner-tags">
+          {["Python", "GeoPandas", "Rasterio", "NumPy", "skimage"].map(t => (
+            <span class="tag">{t}</span>
+          ))}
+        </div>
+      </div>
+    </header>
+
+    <div class="container project-body">
+      <div class="project-layout">
+        <div class="prose">
+
+          <h2>Project Overview</h2>
+          <p>
+            This project implements and extends Jonny Huck's (2015) spatial weighted redistribution
+            algorithm to resolve the <strong>false hotspot problem</strong> in spatially ambiguous data.
+            Passively geocoded tweets are collapsed to a single centroid of the local administrative
+            boundary, creating misleading hotspots. This project reimplements the algorithm to diffuse
+            those points across each admin area, informed by a population density weighting surface.
+          </p>
+          <p>
+            The specific application: redistributing geocoded Twitter data about the Royal Wedding across
+            Greater Manchester to visualise likely tweet origins and evaluate implications for advertising
+            targeting strategies. This project achieved a grade of <strong>82</strong>.
+          </p>
+
+          <h2>Motivation</h2>
+          <p>
+            Passive geocoding collapses all tweets from an area to a single centroid — an extreme form
+            of spatial generalisation that creates artefactual hotspots where real population may not
+            peak. This distortion is particularly problematic in marketing, urban planning, and emergency
+            services, where spatial precision drives resource allocation decisions.
+          </p>
+          <p>
+            I explored how to translate methodological ambiguity into a computational workflow, achieving
+            efficient raster-based processing while maintaining visual and statistical validity.
+          </p>
+
+          <h2>Key Design Decisions</h2>
+
+          <h3>Spatial Indexing</h3>
+          <p>
+            Leveraged GeoPandas' <code>sindex</code> with R-trees to filter candidate points in
+            logarithmic time, using <code>within()</code> checks to confirm geometry containment.
+          </p>
+
+          <h3>Efficient Geometry Filtering</h3>
+          <p>
+            Random seeds were batch-generated within bounding boxes and validated in vectorised NumPy
+            operations, avoiding redundant loops and minimising memory overhead.
+          </p>
+
+          <h3>Raster Updates via Disk Buffers</h3>
+          <p>
+            Used <code>skimage.draw.disk()</code> to localise Euclidean decay calculations, avoiding
+            computationally expensive full-raster iteration on every seed placement.
+          </p>
+
+          <figure>
+            <img src="/images/assignment2/False_Hotspots.png" alt="False hotspots from spatially ambiguous point data" loading="lazy" />
+            <figcaption>Figure 1: Collapsed tweet data creating artefactual hotspots due to spatial generalisation.</figcaption>
+          </figure>
+
+          <figure>
+            <img src="/images/assignment2/Redistribution.png" alt="Redistributed tweet data using s=0.3 and W=25" loading="lazy" />
+            <figcaption>Figure 2: Redistributed tweet data using s = 0.3 and W = 25, diffused across population density surface.</figcaption>
+          </figure>
+
+          <h2>Sensitivity Analysis</h2>
+          <p>
+            The 12-panel figure was created dynamically to visualise how the algorithm responds to
+            changes in the <code>s</code> parameter (spatial ambiguity) and <code>W</code>
+            (number of seed samples):
+          </p>
+          <ul>
+            <li>Lower <code>s</code> values produce tight clusters — suitable for fine-resolution targeting (e.g., billboards)</li>
+            <li>Higher <code>s</code> values broaden distributions — ideal for coarse targeting like regional radio</li>
+            <li>Larger <code>W</code> values favour high-density areas; low <code>W</code> introduces greater stochastic spread</li>
+          </ul>
+
+          <figure>
+            <img src="/images/assignment2/redistribution_grid.png" alt="12-panel sensitivity analysis grid" loading="lazy" />
+            <figcaption>Figure 3: 12-panel dynamic sensitivity analysis showing effects of varying s and W on spatial redistribution.</figcaption>
+          </figure>
+
+          <h2>Challenges Overcome</h2>
+          <ul>
+            <li><strong>MAUP and Scale Discrepancy:</strong> The tweet data's Level 3 admin areas didn't perfectly align with the redistribution shapefile, revealing critical spatial assumptions buried in generalisation pipelines.</li>
+            <li><strong>Visualising Uncertainty:</strong> Rather than claim precision, the algorithm visualises likelihood — outputs are better suited to qualitative inference than point prediction.</li>
+            <li><strong>Runtime Efficiency:</strong> Code executes in under 10 seconds, enabling multiple model runs for the 12-panel comparative output without memory bloat.</li>
+          </ul>
+
+          <h2>Reflections</h2>
+          <p>
+            This project demonstrates a solid understanding of spatial data uncertainty, Python-based
+            geospatial workflows, and efficient algorithm design. Investing time in optimising for
+            usability, flexibility, and clarity produced skills that translate directly into real-world
+            GIS roles where data quality and uncertainty communication are critical.
+          </p>
+        </div>
+
+        <aside class="project-sidebar">
+          <div class="sidebar-card">
+            <h3>Resources</h3>
+            <div class="sidebar-links">
+              <a href="/projects/assignment2/assignment2-writeup.pdf" target="_blank" class="sidebar-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                </svg>
+                Full Write-up (PDF)
+              </a>
+              <a href="https://github.com/MaxLarner/gis-portfolio-max-larner/blob/main/projects/assignment2/assignment2.py" target="_blank" rel="noopener" class="sidebar-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
+                </svg>
+                Python Source on GitHub
+              </a>
+            </div>
+          </div>
+
+          <div class="sidebar-card">
+            <h3>Skills Demonstrated</h3>
+            <ul class="sidebar-skills">
+              <li>Spatial data uncertainty modelling</li>
+              <li>Raster processing & disk buffers</li>
+              <li>Vectorised NumPy operations</li>
+              <li>Algorithm efficiency & profiling</li>
+              <li>Dynamic multi-panel visualisation</li>
+              <li>MAUP and scale analysis</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </article>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .project-banner {
+    position: relative;
+    min-height: 420px;
+    display: flex;
+    align-items: flex-end;
+    padding-top: var(--nav-h);
+    overflow: hidden;
+  }
+  .banner-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    filter: saturate(0.4) brightness(0.35);
+  }
+  .banner-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(8,13,24,1) 0%, rgba(8,13,24,0.5) 60%, rgba(8,13,24,0.2) 100%);
+  }
+  .banner-content {
+    position: relative;
+    z-index: 1;
+    padding-bottom: 3rem;
+    padding-top: 2rem;
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.875rem;
+    color: var(--text-3);
+    margin-bottom: 1.25rem;
+    transition: color 0.15s ease;
+  }
+  .back-link:hover { color: var(--accent); }
+  .banner-meta { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; flex-wrap: wrap; }
+  .banner-content h1 { font-size: clamp(1.8rem, 4vw, 3rem); margin-bottom: 0.4rem; }
+  .banner-sub { font-size: 1.1rem; color: var(--text-2); margin-bottom: 1rem; }
+  .banner-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .project-body { padding-top: 3.5rem; padding-bottom: 2rem; }
+  .project-layout { display: grid; grid-template-columns: 1fr 300px; gap: 4rem; align-items: start; }
+  .project-sidebar { position: sticky; top: calc(var(--nav-h) + 2rem); }
+  .sidebar-card {
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+  .sidebar-card h3 {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-3);
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .sidebar-links { display: flex; flex-direction: column; gap: 0.6rem; }
+  .sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.9rem;
+    color: var(--text-2);
+    transition: color 0.15s ease;
+  }
+  .sidebar-link:hover { color: var(--accent); }
+  .sidebar-skills { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; padding: 0; }
+  .sidebar-skills li {
+    font-size: 0.875rem;
+    color: var(--text-2);
+    padding-left: 1rem;
+    position: relative;
+  }
+  .sidebar-skills li::before { content: "→"; position: absolute; left: 0; color: var(--accent); font-size: 0.75rem; }
+  @media (max-width: 900px) {
+    .project-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+    .project-sidebar { position: static; }
+  }
+</style>
