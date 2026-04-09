@@ -3,6 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 
+const base = import.meta.env.BASE_URL;
+
 const projects = [
   {
     title: "Dissertation — Spatial Prioritisation for Red Squirrel Conservation",
@@ -10,7 +12,7 @@ const projects = [
     slug: "dissertation",
     grade: 78,
     description: "Developed a Python-based spatial prioritisation framework to identify optimal red squirrel strongholds under pine marten recolonisation in Cumbria, combining MCDA with landscape ecology.",
-    image: "/images/dissertation/algorithm_strongholds.png",
+    image: `${base}images/dissertation/algorithm_strongholds.png`,
     tags: ["Python", "GeoPandas", "ArcGIS Pro", "MCDA"],
   },
   {
@@ -19,7 +21,7 @@ const projects = [
     slug: "assignment1",
     grade: 83,
     description: "Custom algorithm using spatial indexing and geodesic geometry to identify the world's shortest international land border with high computational efficiency.",
-    image: "/images/assignment1/shortest_border.png",
+    image: `${base}images/assignment1/shortest_border.png`,
     tags: ["Python", "GeoPandas", "PyProj", "R-tree"],
   },
   {
@@ -28,7 +30,7 @@ const projects = [
     slug: "assignment2",
     grade: 82,
     description: "Implementation of Jonny Huck's (2015) weighted redistribution algorithm to resolve spatial ambiguity in passively geocoded Twitter data across Greater Manchester.",
-    image: "/images/assignment2/redistribution_grid.png",
+    image: `${base}images/assignment2/redistribution_grid.png`,
     tags: ["Python", "GeoPandas", "Rasterio", "NumPy"],
   },
 ];
@@ -44,7 +46,7 @@ const tools = [
 
   <!-- ── HERO ────────────────────────────────────── -->
   <section class="hero">
-    <div class="hero-bg"></div>
+    <div class="hero-bg" style={`background-image: linear-gradient(to bottom, rgba(8,13,24,0.7) 0%, rgba(8,13,24,0.85) 60%, rgba(8,13,24,1) 100%), url('${base}images/topographic_1.png')`}></div>
     <div class="hero-content container">
       <span class="section-label fade-up">GIS · Conservation · Spatial Analysis</span>
       <h1 class="hero-title fade-up-1">Max Larner</h1>
@@ -53,8 +55,8 @@ const tools = [
         Specialising in conservation GIS, Python workflows, and landscape ecology.
       </p>
       <div class="hero-actions fade-up-3">
-        <a href="/projects" class="btn btn-primary">View Projects</a>
-        <a href="/about" class="btn btn-ghost">About Me</a>
+        <a href={`${base}projects`} class="btn btn-primary">View Projects</a>
+        <a href={`${base}about`} class="btn btn-ghost">About Me</a>
       </div>
     </div>
     <div class="hero-scroll fade-up-4" aria-hidden="true">
@@ -71,12 +73,12 @@ const tools = [
           <span class="section-label">Work</span>
           <h2>Featured Projects</h2>
         </div>
-        <a href="/projects" class="link-arrow">View all <span>→</span></a>
+        <a href={`${base}projects`} class="link-arrow">View all <span>→</span></a>
       </div>
 
       <div class="projects-grid">
         {projects.map((p, i) => (
-          <a href={`/projects/${p.slug}`} class="project-card" style={`animation-delay: ${i * 0.1}s`}>
+          <a href={`${base}projects/${p.slug}`} class="project-card" style={`animation-delay: ${i * 0.1}s`}>
             <div class="card-img-wrap">
               <img src={p.image} alt={p.title} loading="lazy" />
               <span class="grade-badge">{p.grade}</span>
@@ -119,7 +121,7 @@ const tools = [
           and sustainable development.
         </p>
         <div class="about-actions">
-          <a href="/about" class="btn btn-outline">Full Bio</a>
+          <a href={`${base}about`} class="btn btn-outline">Full Bio</a>
           <a href="https://linkedin.com/in/max-larner-b53610208" target="_blank" rel="noopener" class="link-arrow">
             LinkedIn <span>→</span>
           </a>
@@ -163,9 +165,6 @@ const tools = [
   .hero-bg {
     position: absolute;
     inset: 0;
-    background-image:
-      linear-gradient(to bottom, rgba(8,13,24,0.7) 0%, rgba(8,13,24,0.85) 60%, rgba(8,13,24,1) 100%),
-      url('/images/topographic_1.png');
     background-size: cover;
     background-position: center;
     animation: slowZoom 20s ease-in-out infinite alternate;

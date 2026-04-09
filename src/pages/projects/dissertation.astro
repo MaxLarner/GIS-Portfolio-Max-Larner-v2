@@ -2,6 +2,8 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
+
+const base = import.meta.env.BASE_URL;
 ---
 <BaseLayout
   title="Dissertation — Spatial Prioritisation for Red Squirrel Conservation"
@@ -12,10 +14,10 @@ import Footer from '../../components/Footer.astro';
   <article>
     <!-- Project banner -->
     <header class="project-banner">
-      <div class="banner-bg" style="background-image: url('/images/dissertation/algorithm_strongholds.png')"></div>
+      <div class="banner-bg" style={`background-image: url('${base}images/dissertation/algorithm_strongholds.png')`}></div>
       <div class="banner-overlay"></div>
       <div class="container banner-content">
-        <a href="/projects" class="back-link">← All Projects</a>
+        <a href={`${base}projects`} class="back-link">← All Projects</a>
         <div class="banner-meta">
           <span class="grade-badge">78 / 100</span>
           <span class="tag">Dissertation</span>
@@ -76,7 +78,7 @@ import Footer from '../../components/Footer.astro';
           </ul>
 
           <figure>
-            <img src="/images/dissertation/code.png" alt="Workflow diagram — suppression modelling, clustering, and MCDA scoring" loading="lazy" />
+            <img src={`${base}images/dissertation/code.png`} alt="Workflow diagram — suppression modelling, clustering, and MCDA scoring" loading="lazy" />
             <figcaption>Figure 1: Workflow diagram showing suppression modelling, clustering, and MCDA scoring.</figcaption>
           </figure>
 
@@ -89,17 +91,17 @@ import Footer from '../../components/Footer.astro';
           </ul>
 
           <figure>
-            <img src="/images/dissertation/algorithm_strongholds.png" alt="Algorithmically selected strongholds map" loading="lazy" />
+            <img src={`${base}images/dissertation/algorithm_strongholds.png`} alt="Algorithmically selected strongholds map" loading="lazy" />
             <figcaption>Figure 2: Algorithmically selected strongholds across suppression scenarios.</figcaption>
           </figure>
 
           <figure>
-            <img src="/images/dissertation/Xray.png" alt="Grey squirrel density comparison under suppression scenarios" loading="lazy" />
+            <img src={`${base}images/dissertation/Xray.png`} alt="Grey squirrel density comparison under suppression scenarios" loading="lazy" />
             <figcaption>Figure 3: Grey squirrel density in existing strongholds under low, moderate, and high pine marten suppression.</figcaption>
           </figure>
 
           <figure>
-            <img src="/images/dissertation/graph.png" alt="Stronghold analysis — habitat composition, core area, and grey squirrel density" loading="lazy" />
+            <img src={`${base}images/dissertation/graph.png`} alt="Stronghold analysis — habitat composition, core area, and grey squirrel density" loading="lazy" />
             <figcaption>Figure 4: Stronghold analysis investigating how prioritised habitat composition, core area, and grey squirrel density change under suppression scenarios.</figcaption>
           </figure>
 

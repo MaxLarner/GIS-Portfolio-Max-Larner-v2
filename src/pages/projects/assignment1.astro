@@ -2,6 +2,8 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
+
+const base = import.meta.env.BASE_URL;
 ---
 <BaseLayout
   title="World's Shortest Border Algorithm"
@@ -11,10 +13,10 @@ import Footer from '../../components/Footer.astro';
 
   <article>
     <header class="project-banner">
-      <div class="banner-bg" style="background-image: url('/images/assignment1/shortest_border.png')"></div>
+      <div class="banner-bg" style={`background-image: url('${base}images/assignment1/shortest_border.png')`}></div>
       <div class="banner-overlay"></div>
       <div class="container banner-content">
-        <a href="/projects" class="back-link">← All Projects</a>
+        <a href={`${base}projects`} class="back-link">← All Projects</a>
         <div class="banner-meta">
           <span class="grade-badge">83 / 100</span>
           <span class="tag">GIS Programming</span>
@@ -100,7 +102,7 @@ import Footer from '../../components/Footer.astro';
           </p>
 
           <figure>
-            <img src="/images/assignment1/shortest_border.png" alt="Map of the shortest international border — Italy and Vatican City" loading="lazy" />
+            <img src={`${base}images/assignment1/shortest_border.png`} alt="Map of the shortest international border — Italy and Vatican City" loading="lazy" />
             <figcaption>
               Figure 1: Map of the shortest international border (Italy–Vatican City), reprojected to a dynamic
               UTM zone for accurate local visualisation.
